@@ -1,0 +1,35 @@
+body {
+    text-align: center;
+    background-color: #AFC8AD;
+}
+
+h1 {
+    font-family: "Lora";
+    font-size: 50px;
+}
+
+#img{
+    height:200px;
+    width:200px;
+}
+
+.btn{
+    font-size: 20px;
+    background-color: #C1F2B0;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.select-btn{
+    font-size: 15px;
+}
+
+.output-heading{
+    font-size: 30px;
+    font-family: "Oswald"
+}
+
+.output-txt{
+    font-family: "Bree Serif";
+    font-size:25px;
+}
