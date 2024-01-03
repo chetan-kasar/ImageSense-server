@@ -8,7 +8,7 @@ genai.configure(api_key='AIzaSyAMjsZilyZXxmG3mVDmqb6Y4D30ZX-GwNs')
 app = Flask(__name__)
 CORS(app)
 
-@app.route("/home", methods = ["POST"])
+@app.route("/", methods = ["POST"])
 def home():
     if 'image' in request.files:
         image = request.files['image']
@@ -20,20 +20,6 @@ def home():
 
     else:
         return 'No image found in request!'
-
-
-@app.route("/generateText", methods = ["POST"])
-def generateText():
-    file = request.files["fileImage"]
-    img = PIL.Image.open(BytesIO(file.read()))
-    model = genai.GenerativeModel('gemini-pro-vision')
-    response = model.generate_content(img)
-
-    return render_template("index.html", output=response.text)
-
-@app.route("/")
-def index():
-    return render_template("index.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
