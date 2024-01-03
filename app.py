@@ -1,12 +1,26 @@
-import base64
-
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
+from flask_cors import CORS
 import PIL.Image
 from io import BytesIO
 import google.generativeai as genai
 genai.configure(api_key='AIzaSyAMjsZilyZXxmG3mVDmqb6Y4D30ZX-GwNs')
 
 app = Flask(__name__)
+CORS(app)
+
+@app.route("/home", methods = ["POST"])
+def home():
+    if 'image' in request.files:
+        image = request.files['image']
+        img = PIL.Image.open(BytesIO(image.read()))
+        model = genai.GenerativeModel('gemini-pro-vision')
+        response = model.generate_content(img)
+        data = {'message':response.text}
+        return jsonify(data)
+
+    else:
+        return 'No image found in request!'
+
 
 @app.route("/generateText", methods = ["POST"])
 def generateText():
@@ -15,10 +29,7 @@ def generateText():
     model = genai.GenerativeModel('gemini-pro-vision')
     response = model.generate_content(img)
 
-    file_content = file.read()
-    file_content_base64 = base64.b64encode(file_content).decode('utf-8')
-
-    return render_template("index.html", output=response.text, file_content_base64=file_content_base64)
+    return render_template("index.html", output=response.text)
 
 @app.route("/")
 def index():
