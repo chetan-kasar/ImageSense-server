@@ -12,9 +12,10 @@ CORS(app)
 def home():
     if 'image' in request.files:
         image = request.files['image']
+        prompt = request.form.get('prompt')
         img = PIL.Image.open(BytesIO(image.read()))
         model = genai.GenerativeModel('gemini-pro-vision')
-        response = model.generate_content(img)
+        response = model.generate_content([prompt, img])
         data = {'message':response.text}
         return jsonify(data)
 
