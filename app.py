@@ -3,7 +3,13 @@ from flask_cors import CORS
 import PIL.Image
 from io import BytesIO
 import google.generativeai as genai
-genai.configure(api_key='AIzaSyAMjsZilyZXxmG3mVDmqb6Y4D30ZX-GwNs')
+import os
+
+api_key = os.getenv('GEMINI_API_KEY')
+if not api_key:
+    raise ValueError("GEMINI_API_KEY environment variable not set!")
+
+genai.configure(api_key=api_key)     
 
 app = Flask(__name__)
 CORS(app)
