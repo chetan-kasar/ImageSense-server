@@ -14,7 +14,7 @@ def home():
         image = request.files['image']
         prompt = request.form.get('prompt')
         img = PIL.Image.open(BytesIO(image.read()))
-        model = genai.GenerativeModel('gemini-pro-vision')
+        model = genai.GenerativeModel('gemini-2.5-flash-lite')
         response = model.generate_content([prompt, img])
         data = {'message':response.text}
         return jsonify(data)
